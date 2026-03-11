@@ -1,0 +1,20 @@
+# cache do python
+__pycache__/
+*.pyc
+*.pyo
+
+# ambiente virtual
+venv/
+.env/
+
+# variáveis de ambiente
+.env
+
+# arquivos do VS Code
+.vscode/
+
+# logs
+*.log
+
+# arquivos do sistema
+.DS_Store
