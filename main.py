@@ -11,11 +11,10 @@ from database import get_db
 
 
 
-
 app = FastAPI()
 
     
-
+##Método Get que busca por Id
 @app.get("/usuarios/{usuario_id}")  
 async def fetch_usuario(usuario_id: UUID, db: Session = Depends(get_db)):
     try:
@@ -26,6 +25,7 @@ async def fetch_usuario(usuario_id: UUID, db: Session = Depends(get_db)):
             detail=f"Usuario com Id {usuario_id} não existe"
         )
 
+##Método Get que busca por nome
 @app.get("/usuarios/buscar/{nome}")
 async def buscar_usuario(nome: str, db: Session = Depends(get_db)):
     try:
@@ -36,6 +36,7 @@ async def buscar_usuario(nome: str, db: Session = Depends(get_db)):
             detail=f"Nenhum usuario encontrado com esse nome"
         )
 
+##Método post recebe os dados enviados pelo cliente e cria um novo registro de usuário no banco de dados
 @app.post("/usuarios")
 async def registrar_usuario(usuario: Usuario, db: Session = Depends(get_db)):
     try:
@@ -46,7 +47,7 @@ async def registrar_usuario(usuario: Usuario, db: Session = Depends(get_db)):
             detail=f"Erro ao criar usuario: {str(e)}"
         )
    
-
+##Método delete ele deleta um usuario existente
 @app.delete("/usuarios/{Usuario_id}")
 async def deletar(Usuario_id: UUID, db: Session = Depends(get_db)):
     try:
@@ -57,6 +58,7 @@ async def deletar(Usuario_id: UUID, db: Session = Depends(get_db)):
             detail=f"Usuario com Id {Usuario_id} não existe"
         )
 
+##Método put atualiza as informações de um usuario
 @app.put("/usuarios/{Usuario_id}")
 async def update(Usuario_id: UUID, usuario: RequisicaoAtualizacao, db: Session = Depends(get_db)):
     try:

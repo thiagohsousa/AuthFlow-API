@@ -1,6 +1,9 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
+
+##conexão do MySql com o Python e sqlalchemy
+
 DATABASE_URL = "mysql+pymysql://root:thiagohs.dev15@localhost:3306/api_usuarios"
 
 engine = create_engine(DATABASE_URL)

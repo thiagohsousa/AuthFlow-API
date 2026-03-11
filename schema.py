@@ -3,6 +3,8 @@ from uuid import UUID, uuid4
 from pydantic import BaseModel, Field
 from enum import Enum
 
+##schema.py - Define os modelos de dados para a aplicação usando Pydantic. Este modelo é usado para validar e serializar os dados que entram e saem da aplicação, garantindo que os dados estejam no formato correto e atendam aos requisitos definidos.
+
 class Genero(str, Enum):
     Masculino = "Masculino"
     Feminino = "Feminino"
