@@ -16,14 +16,14 @@ class Usuario(BaseModel):
     id: UUID = Field(default_factory=uuid4)
     nome: str
     sobrenome: str
-    nome_meio: Optional[str] = None
+    Cpf: Optional[str] = None
     genero: Genero
     funcoes: List[Roles]
 
 class RequisicaoAtualizacao(BaseModel):
     nome: str = None
     sobrenome: str = None
-    nome_meio: Optional[str] = None
+    Cpf: Optional[str] = None
     genero: Genero = None
     funcoes: List[Roles] = None
         

@@ -10,6 +10,6 @@ class Usuarios(Base):
     Id = Column((CHAR(36)), primary_key=True, default=lambda: str(uuid4()));
     Nome = Column(String(100));
     Sobrenome = Column (String(50));
-    Nome_do_Meio = Column(String(50));
+    Cpf = Column(String(11));
     genero = Column(Enum(Genero));
     Funcao =  Column(Enum(Roles));

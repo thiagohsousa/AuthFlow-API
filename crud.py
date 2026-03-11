@@ -8,7 +8,7 @@ def criar_usuario(db: Session, usuario: Usuario):
         Id=str(usuario.id),
         Nome=usuario.nome,
         Sobrenome=usuario.sobrenome,
-        Nome_do_Meio=usuario.nome_meio,
+        Cpf=usuario.Cpf,
         genero=usuario.genero,
         Funcao=usuario.funcoes[0] if usuario.funcoes else None
     )
@@ -56,8 +56,8 @@ def atualizar_usuario(db : Session, usuario_id, dados):
     if dados.sobrenome:
         usuario.Sobrenome = dados.sobrenome
 
-    if dados.nome_meio:
-        usuario.Nome_do_Meio = dados.nome_meio
+    if dados.Cpf:
+        usuario.Cpf = dados.Cpf
 
     if dados.genero:
         usuario.genero = dados.genero
