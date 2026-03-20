@@ -3,7 +3,7 @@
 ## 📌 Descrição
 
 Este projeto é uma API REST desenvolvida com **FastAPI** para gerenciamento de usuários.  
-A aplicação permite criar, listar, atualizar e deletar usuários utilizando operações CRUD.
+A aplicação permite criar, listar, atualizar e deletar usuários utilizando operações CRUD, alem disso a api permite fazer login atraves da autenticação JWT.
 
 O objetivo do projeto é praticar conceitos de desenvolvimento backend utilizando Python, APIs REST e integração com banco de dados.
 
@@ -16,8 +16,7 @@ O objetivo do projeto é praticar conceitos de desenvolvimento backend utilizand
 - MySQL
 - SQLAlchemy
 - Uvicorn
-- Postman
-
+- Swagger
 ---
 
 ## ⚙️ Funcionalidades
@@ -28,6 +27,7 @@ A API permite:
 - Listar usuários
 - Atualizar usuários
 - Deletar usuários
+- Fazer Login
 
 ---
 
@@ -51,6 +51,8 @@ Responsável por criar as tabelas no banco de dados automaticamente.
 **crud.py**  
 Contém as funções responsáveis pelas operações CRUD (Create, Read, Update e Delete).
 
+**auth.py**
+Responsavel pela Autenticação JWT, Criptografa senhas, cria Tokens e Permite realizar Login
  
 ---
 
