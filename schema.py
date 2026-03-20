@@ -17,6 +17,7 @@ class Roles(str, Enum):
 class Usuario(BaseModel):
     id: UUID = Field(default_factory=uuid4)
     nome: str
+    username: str
     sobrenome: str
     Cpf: Optional[str] = None
     genero: Genero

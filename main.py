@@ -6,36 +6,35 @@ from uuid import UUID
 from sqlalchemy.orm import Session
 from crud import criar_usuario, deletar_usuario, atualizar_usuario, listar_usuario, buscar_usuario_por_nome
 from database import get_db
-
+import auth
 
 
 
 
 app = FastAPI()
 
-    
-##Método Get que busca por Id
-@app.get("/usuarios/{usuario_id}")  
-async def fetch_usuario(usuario_id: UUID, db: Session = Depends(get_db)):
-    try:
-        return listar_usuario(db, usuario_id)
-    except ValueError:
-        raise HTTPException(
-            status_code=404,
-            detail=f"Usuario com Id {usuario_id} não existe"
-        )
+app.include_router(auth.router) 
+
+
+
 
 ##Método Get que busca por nome
-@app.get("/usuarios/buscar/{nome}")
-async def buscar_usuario(nome: str, db: Session = Depends(get_db)):
+@app.get("/usuarios")
+async def buscar_usuario(
+    nome: str = None,
+    db: Session = Depends(get_db)
+):
     try:
-        return buscar_usuario_por_nome(db, nome)
+        if nome:
+            return buscar_usuario_por_nome(db, nome)
+        
+        return listar_usuario(db)
+
     except ValueError:
         raise HTTPException(
             status_code=404,
-            detail=f"Nenhum usuario encontrado com esse nome"
+            detail="Nenhum usuario encontrado"
         )
-
 ##Método post recebe os dados enviados pelo cliente e cria um novo registro de usuário no banco de dados
 @app.post("/usuarios")
 async def registrar_usuario(usuario: Usuario, db: Session = Depends(get_db)):
