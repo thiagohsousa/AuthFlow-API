@@ -8,6 +8,8 @@ from crud import criar_usuario, deletar_usuario, atualizar_usuario, listar_usuar
 from database import get_db
 import auth
 import uvicorn
+from database import engine, Base
+
 
 
 
@@ -15,9 +17,11 @@ import uvicorn
 
 app = FastAPI()
 
+
+Base.metadata.create_all(bind=engine)
+
+
 app.include_router(auth.router) 
-
-
 
 
 ##Método Get que busca por nome
