@@ -8,11 +8,13 @@ def criar_usuario(db: Session, usuario: Usuario):
     novo_usuario = Usuarios(
         Id=str(usuario.id),
         Nome=usuario.nome,
+        username=usuario.username,
         Sobrenome=usuario.sobrenome,
         Cpf=usuario.Cpf,
         genero=usuario.genero,
-        Funcao=usuario.funcoes[0] if usuario.funcoes else None
-    )
+        Funcao=usuario.funcoes[0] if usuario.funcoes else None,
+        hashed_password=usuario.hashed_password
+    ) 
 
     db.add(novo_usuario)
     db.commit()
@@ -59,6 +61,9 @@ def atualizar_usuario(db : Session, usuario_id, dados):
     
     if dados.nome:
         usuario.Nome = dados.nome
+
+    if dados.username:
+        usuario.username = dados.username
     
     if dados.sobrenome:
         usuario.Sobrenome = dados.sobrenome
@@ -71,6 +76,9 @@ def atualizar_usuario(db : Session, usuario_id, dados):
 
     if dados.funcoes:
         usuario.Funcao = dados.funcoes[0]
+
+    if dados.hashed_password:
+        usuario.hashed_password = dados.hashed_password
 
     db.commit()
     return usuario

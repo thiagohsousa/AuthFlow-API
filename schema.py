@@ -17,10 +17,12 @@ class Roles(str, Enum):
 class Usuario(BaseModel):
     id: UUID = Field(default_factory=uuid4)
     nome: str
+    username: str
     sobrenome: str
     Cpf: Optional[str] = None
     genero: Genero
     funcoes: List[Roles]
+    hashed_password: str
 
 class RequisicaoAtualizacao(BaseModel):
     nome: str = None
@@ -28,4 +30,4 @@ class RequisicaoAtualizacao(BaseModel):
     Cpf: Optional[str] = None
     genero: Genero = None
     funcoes: List[Roles] = None
-        
+    hashed_password: str = None   
