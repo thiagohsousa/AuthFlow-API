@@ -10,14 +10,14 @@ from models_db import Usuarios
 from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
-
+import os 
 
 router = APIRouter(
     prefix="/auth",
     tags=["auth"]
 )
 
-SECRET_KEY = "134625bniai19890987b8a9c8e5f6a7b8c9d0e1f2g3h4i5j6k7l8m9n0o1p2q3r4s5t6u7v8w9x0y1z2"
+SECRET_KEY = os.getenv("SECRET_KEY", "dev_secret")
 ALGORITHM = "HS256"
 
 bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto") 
@@ -25,7 +25,7 @@ oauth2_bearer = OAuth2PasswordBearer(tokenUrl="auth/login")
 
 class createRequisicaouser(BaseModel):
     nome: str
-    Username: str
+    username: str  
     sobrenome: str
     Cpf: str
     genero: str
@@ -45,8 +45,7 @@ def get_db():
 
 db_dependency = Annotated[Session, Depends(get_db)]
 
-
-#rota para fazer cadastro de usuario, recebe os dados do usuario, cria um novo registro no banco de dados e retorna o usuario criado. O password é criptografado usando bcrypt antes de ser salvo no banco de dados.
+# ROTA DE CRIAÇÃO DE USUÁRIO
 @router.post("/", status_code=status.HTTP_201_CREATED)
 def create_user(user: createRequisicaouser, db: db_dependency):
 
@@ -57,26 +56,29 @@ def create_user(user: createRequisicaouser, db: db_dependency):
 
     db.add(create_user_model)
     db.commit()
+    db.refresh(create_user_model) 
 
+    return create_user_model  
 
-#função para autenticar o usuario
+# AUTENTICAÇÃO
 def autenticar_usuario(db, username: str, password: str):
-        user = db.query(Usuarios).filter(Usuarios.username == username).first()
-        if not user:
-            return False
-        if not bcrypt_context.verify(password, user.hashed_password):
-            return False
-        return user
+    user = db.query(Usuarios).filter(Usuarios.username == username).first()
+    if not user:
+        return False
+    if not bcrypt_context.verify(password, user.hashed_password):
+        return False
+    return user
 
-
-#cria o token de acesso usando JWT
+# CRIAÇÃO DO TOKEN
 def criar_token_acesso(username: str, user_id: str, expires_delta: timedelta):
-    encode = {"sub": username, "id": user_id, "exp": datetime.utcnow() + expires_delta}
+    encode = {
+        "sub": username,
+        "id": user_id,
+        "exp": datetime.utcnow() + expires_delta
+    }
     return jwt.encode(encode, SECRET_KEY, algorithm=ALGORITHM)
 
-
-
-#rota para fazer login, recebe o username e password do usuario, autentica o usuario e retorna um token de acesso se as credenciais estiverem corretas. O token de acesso é criado usando JWT e inclui o username, id do usuario e a data de expiração do token.
+# LOGIN
 @router.post("/login", response_model=Token)
 async def login_for_access_token(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
@@ -92,7 +94,7 @@ async def login_for_access_token(
 
     access_token = criar_token_acesso(
         user.username,
-        user.Id,  
+        user.Id,
         timedelta(minutes=20)
     )
 
