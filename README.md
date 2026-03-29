@@ -12,8 +12,8 @@ Este projeto tem como foco o desenvolvimento de habilidades em **back-end**, boa
 
 ## 🌐 Deploy
 
-🔗 API Online: *(adicione aqui depois do deploy)*  
-🔗 Documentação Swagger: *(adicione /docs após o deploy)*
+🔗 API Online: https://authflow-api-d0i1.onrender.com/  
+🔗 Documentação Swagger: https://authflow-api-d0i1.onrender.com/docs  
 
 ---
 
