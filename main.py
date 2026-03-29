@@ -7,6 +7,8 @@ from sqlalchemy.orm import Session
 from crud import criar_usuario, deletar_usuario, atualizar_usuario, listar_usuario, buscar_usuario_por_nome
 from database import get_db
 import auth
+import uvicorn
+
 
 
 
@@ -68,3 +70,6 @@ async def update(Usuario_id: UUID, usuario: RequisicaoAtualizacao, db: Session =
             status_code=404,
             detail=f"Usuario com Id {Usuario_id} não existe"
         )
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
